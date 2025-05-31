@@ -30,11 +30,11 @@ def player(board):
         o_items += row.count("O")
 
     if (x_items == 0 and o_items == 0):
-        return "X"
+        return X
     elif x_items > o_items:
-        return x_items
+        return X
     elif x_items < o_items:
-        return o_items
+        return O
     else:
         return None
 
@@ -117,4 +117,49 @@ def minimax(board):
     """
     Returns the optimal action for the current player on the board.
     """
-    raise NotImplementedError
+    if terminal(board):
+        return None
+    
+    player = player(board)
+
+    #player X wants to maximise, and player O wants to minimise
+    best_action = None
+    if player == X:
+        value = -math.inf
+        for action in actions(board):
+            resulting_value = maxvalue(result(board, action))
+            if resulting_value > value:
+                value = resulting_value
+                best_action = action
+    else:
+        value = math.inf
+        for action in actions(board):
+            resulting_value = minvalue(result(board, action))
+            if resulting_value < value:
+                value = resulting_value
+                best_action = action
+
+    return best_action
+
+def minvalue(board):
+    value = math.inf
+    if terminal(board):
+        return utility(board)
+    
+    for action in actions(board):
+        value = min(value, maxvalue(result(board, action)))
+
+    return value
+
+
+def maxvalue(board):
+    value = -math.inf
+
+    if terminal(board):
+        return utility(board)
+    
+    for action in actions(board):
+        value = max(value, minvalue(result(board, action)))
+
+    return value
+
