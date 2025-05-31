@@ -109,8 +109,9 @@ def utility(board):
     """
     Returns 1 if X has won the game, -1 if O has won, 0 otherwise.
     """
-    raise NotImplementedError
-
+    winner = winner(board)
+    #Tried conditional comprehension, TODO: check if its correct hheeh
+    return 0 if winner == None else 1 if winner == X else -1
 
 def minimax(board):
     """
