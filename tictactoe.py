@@ -3,6 +3,7 @@ Tic Tac Toe Player
 """
 
 import math
+import copy
 
 X = "X"
 O = "O"
@@ -32,8 +33,10 @@ def player(board):
         return "X"
     elif x_items > o_items:
         return x_items
-    else:
+    elif x_items < o_items:
         return o_items
+    else:
+        return None
 
 
 def actions(board):
@@ -49,21 +52,48 @@ def actions(board):
     return actions
 
 
-
-
-
 def result(board, action):
     """
     Returns the board that results from making move (i, j) on the board.
     """
-    raise NotImplementedError
+    copied_board = copy.deepcopy(board)
+    players_turn = player(copied_board)
+    if copied_board[action[0]][action[1]] != "EMPTY":
+        raise RuntimeError()
+    
+    copied_board[action[0]][action[1]] = players_turn
+    return copied_board
+    
+
 
 
 def winner(board):
     """
     Returns the winner of the game, if there is one.
     """
-    raise NotImplementedError
+    # Meaning there is no more actions possible = board is complete
+    copied_board = copy.deepcopy(board)
+    if not actions(copied_board):
+        #Gonna try flattening the board with list comprehensions
+        flat_board = [value for row in copied_board for value in row]
+        #check rows
+        for i in range(0, 9, 3):
+            if (flat_board[i] == flat_board[i+1] and flat_board[i+1] == flat_board[i+2]):
+                return flat_board[i]
+        
+        #check columns
+        for i in range(3):
+            if (flat_board[i] == flat_board[i+3] and flat_board[i+3] == flat_board[i+6]):
+                return flat_board[i]
+            
+        #check diagonals
+        if (flat_board[0] == flat_board[4] and flat_board[4] == flat_board[8]):
+                return flat_board[0]
+        if (flat_board[2] == flat_board[4] and flat_board[4] == flat_board[6]):
+                return flat_board[2]
+
+
+    return None
 
 
 def terminal(board):
