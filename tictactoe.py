@@ -46,7 +46,7 @@ def actions(board):
     actions = []
     for i in range(3):
         for j in range(3):
-            if board[i][j] == "EMPTY":
+            if board[i][j] == EMPTY:
                 actions.append((i,j))
 
     return actions
@@ -58,7 +58,7 @@ def result(board, action):
     """
     copied_board = copy.deepcopy(board)
     players_turn = player(copied_board)
-    if copied_board[action[0]][action[1]] != "EMPTY":
+    if copied_board[action[0]][action[1]] != EMPTY:
         raise RuntimeError()
     
     copied_board[action[0]][action[1]] = players_turn
@@ -100,7 +100,7 @@ def terminal(board):
     Returns True if game is over, False otherwise.
     """
     #Finished if there is a winner or no more actions
-    if (winner is not None or not actions(board)):
+    if (winner(board) is not None or not actions(board)):
         return True
     return False
 
