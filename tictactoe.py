@@ -29,10 +29,6 @@ def player(board):
         x_items += row.count(X)
         o_items += row.count(O)
 
-    print("items:")
-    print(x_items)
-    print(o_items)
-
     if (x_items == 0 and o_items == 0):
         return X
     elif x_items > o_items:
@@ -66,39 +62,32 @@ def result(board, action):
         raise RuntimeError()
     
     copied_board[action[0]][action[1]] = players_turn
+
     return copied_board
     
-
-
 
 def winner(board):
     """
     Returns the winner of the game, if there is one.
     """
-    copied_board = copy.deepcopy(board)
     
-    #Gonna try flattening the board with list comprehensions
-    flat_board = [value for row in copied_board for value in row]
-    print(flat_board)
-    #check rows
+    # Gonna try flattening the board with list comprehensions
+    flat_board = [value for row in board for value in row]
+    # check rows
     for i in range(0, 9, 3):
         if (flat_board[i] is not None and flat_board[i] == flat_board[i+1] and flat_board[i+1] == flat_board[i+2]):
             return flat_board[i]
     
-    print("here1")
-    #check columns
+    # check columns
     for i in range(3):
         if (flat_board[i] is not None and flat_board[i] == flat_board[i+3] and flat_board[i+3] == flat_board[i+6]):
             return flat_board[i]
     
-    print("here2")
-
-    #check diagonals
+    # check diagonals
     if (flat_board[0] is not None and flat_board[0] == flat_board[4] and flat_board[4] == flat_board[8]):
             return flat_board[0]
-    if (flat_board[0] is not None and flat_board[2] == flat_board[4] and flat_board[4] == flat_board[6]):
+    if (flat_board[2] is not None and flat_board[2] == flat_board[4] and flat_board[4] == flat_board[6]):
             return flat_board[2]
-    print("here3")
 
     return None
 
@@ -107,7 +96,7 @@ def terminal(board):
     """
     Returns True if game is over, False otherwise.
     """
-    #Finished if there is a winner or no more actions
+    # Finished if there is a winner or no more actions
     if (not actions(board) or winner(board) is not None):
         return True
     return False
@@ -118,7 +107,7 @@ def utility(board):
     Returns 1 if X has won the game, -1 if O has won, 0 otherwise.
     """
     winner_result = winner(board)
-    #Tried conditional comprehension, TODO: check if its correct hheeh
+    # Tried conditional comprehension, TODO: check if its correct hheeh
     return 0 if winner_result == None else 1 if winner_result == X else -1
 
 def minimax(board):
@@ -129,22 +118,21 @@ def minimax(board):
         return None
     
     player_turn = player(board)
-
-    #player X wants to maximise, and player O wants to minimise
     best_action = None
+
     if player_turn == X:
-        value = -math.inf
+        best_value = -math.inf
         for action in actions(board):
-            resulting_value = maxvalue(result(board, action))
-            if resulting_value > value:
-                value = resulting_value
+            value = minvalue(result(board, action))
+            if value > best_value:
+                best_value = value
                 best_action = action
     else:
-        value = math.inf
+        best_value = math.inf
         for action in actions(board):
-            resulting_value = minvalue(result(board, action))
-            if resulting_value < value:
-                value = resulting_value
+            value = maxvalue(result(board, action))
+            if value < best_value:
+                best_value = value
                 best_action = action
 
     return best_action

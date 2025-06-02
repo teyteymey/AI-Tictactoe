@@ -90,6 +90,7 @@ while True:
             tiles.append(row)
 
         game_over = ttt.terminal(board)
+        print("Game over " + str(game_over))
         player = ttt.player(board)
 
         # Show title
@@ -108,11 +109,11 @@ while True:
         titleRect.center = ((width / 2), 30)
         screen.blit(title, titleRect)
 
-        # Check for AI move
         if user != player and not game_over:
             if ai_turn:
                 time.sleep(0.5)
                 move = ttt.minimax(board)
+                print("Move " + move)
                 board = ttt.result(board, move)
                 ai_turn = False
             else:
@@ -126,7 +127,6 @@ while True:
                 for j in range(3):
                     if (board[i][j] == ttt.EMPTY and tiles[i][j].collidepoint(mouse)):
                         board = ttt.result(board, (i, j))
-
         if game_over:
             againButton = pygame.Rect(width / 3, height - 65, width / 3, 50)
             again = mediumFont.render("Play Again", True, black)
