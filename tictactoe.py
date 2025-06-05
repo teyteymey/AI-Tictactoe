@@ -44,11 +44,11 @@ def actions(board):
     """
     Returns set of all possible actions (i, j) available on the board.
     """
-    actions = []
+    actions = set()
     for i in range(3):
         for j in range(3):
             if board[i][j] == EMPTY:
-                actions.append((i,j))
+                actions.add((i,j))
 
     return actions
 
@@ -59,8 +59,13 @@ def result(board, action):
     """
     copied_board = copy.deepcopy(board)
     players_turn = player(copied_board)
+
+    if action[0] not in range(0,3) or action[1] not in range(0,3):
+        raise RuntimeError('Action outside game board!!!')
+    
     if copied_board[action[0]][action[1]] != EMPTY:
-        raise RuntimeError()
+        raise RuntimeError('Cant play there, already used by another player')
+
     
     copied_board[action[0]][action[1]] = players_turn
 
