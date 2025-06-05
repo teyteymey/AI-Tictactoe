@@ -30,7 +30,7 @@ def player(board):
         x_items += row.count(X)
         o_items += row.count(O)
 
-    if (x_items == 0 and o_items == 0):
+    if (x_items == o_items):
         return X
     elif x_items > o_items:
         return O
