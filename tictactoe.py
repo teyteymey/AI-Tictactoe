@@ -4,6 +4,7 @@ Tic Tac Toe Player
 
 import math
 import copy
+import sys
 
 X = "X"
 O = "O"
@@ -121,16 +122,23 @@ def minimax(board):
     best_action = None
 
     if player_turn == X:
+        value = -math.inf
         best_value = -math.inf
         for action in actions(board):
             value = minvalue(result(board, action))
+            if value == 1:
+                return action
             if value > best_value:
                 best_value = value
                 best_action = action
+
     else:
+        value = math.inf
         best_value = math.inf
         for action in actions(board):
             value = maxvalue(result(board, action))
+            if value == -1:
+                return action
             if value < best_value:
                 best_value = value
                 best_action = action
@@ -139,23 +147,34 @@ def minimax(board):
 
 def minvalue(board):
     value = math.inf
+    best_value = math.inf
+
     if terminal(board):
         return utility(board)
-    
+        
     for action in actions(board):
-        value = min(value, maxvalue(result(board, action)))
+        value = maxvalue(result(board, action))
+        if value == -1:
+            return -1
+        if value < best_value:
+            best_value = value
 
-    return value
+    return best_value
 
 
 def maxvalue(board):
     value = -math.inf
+    best_value = -math.inf
 
     if terminal(board):
         return utility(board)
     
     for action in actions(board):
-        value = max(value, minvalue(result(board, action)))
+        value = minvalue(result(board, action))
+        if value == 1:
+            return 1
+        if value > best_value:
+            best_value = value
 
-    return value
+    return best_value
 
