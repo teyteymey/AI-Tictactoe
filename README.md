@@ -6,7 +6,7 @@ Tic tac toe game in Python. Try your luck against my AI
 
 ## Tic-Tac-Toe Functions Overview
 
-### `player(board)`
+#### `player(board)`
 - **Purpose**: Determines which player's turn it is (`X` or `O`).
 - **Rules**:
   - `X` always moves first.
@@ -15,7 +15,7 @@ Tic tac toe game in Python. Try your luck against my AI
 
 ---
 
-### `actions(board)`
+#### `actions(board)`
 - **Purpose**: Returns all **possible actions** on the current board.
 - **Format**: A set of tuples `(i, j)` where:
   - `i` = row index (0, 1, or 2)
@@ -25,7 +25,7 @@ Tic tac toe game in Python. Try your luck against my AI
 
 ---
 
-### `result(board, action)`
+#### `result(board, action)`
 - **Purpose**: Returns the **new board state** after applying the action.
 - **Constraints**:
   - Must **not** modify the original board.
@@ -34,7 +34,7 @@ Tic tac toe game in Python. Try your luck against my AI
 
 ---
 
-### `winner(board)`
+#### `winner(board)`
 - **Purpose**: Returns the **winner** of the game, if there is one.
 - **Return Values**:
   - `"X"` if X has won
@@ -46,7 +46,7 @@ Tic tac toe game in Python. Try your luck against my AI
 
 ---
 
-### `terminal(board)`
+#### `terminal(board)`
 - **Purpose**: Checks if the game is **over**.
 - **Return**:
   - `True` if someone has won or the board is full (tie)
@@ -54,7 +54,7 @@ Tic tac toe game in Python. Try your luck against my AI
 
 ---
 
-### `utility(board)`
+#### `utility(board)`
 - **Purpose**: Returns the **utility value** of a terminal board.
 - **Values**:
   - `1` if X has won
@@ -64,7 +64,7 @@ Tic tac toe game in Python. Try your luck against my AI
 
 ---
 
-### `minimax(board)`
+#### `minimax(board)`
 - **Purpose**: Returns the **optimal move** `(i, j)` for the current player.
 - **Behavior**:
   - Chooses the best possible move to **maximize utility**.
