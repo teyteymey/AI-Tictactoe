@@ -1,5 +1,7 @@
-# Ai-tictactoe
+# AI-tictactoe
 Tic tac toe game in Python. Try your luck against my AI
+
+This code is part of a project for CS50AI course by Harvard university. The ask was to code an AI that is able to play tic-tac-toe optimally. 
 
 ## How to run
 `python3 runner.py`
